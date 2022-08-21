@@ -1,0 +1,57 @@
+extends layout
+block content
+  .div.align-items-center.h-300.px-4.gx-5
+   .div.container
+    .div.row.justify-content-center
+     .div.col-xl-5.col-md-8
+      .div.bg-white.rounded.shadow-5-strong.p-5
+       form(action='/esv' method='POST' id='esv')
+        div.form-group
+          .div.form-outline.mb-4
+            input.form-control(type='hidden' id='_id' name='_id' value=data._id)
+            input.form-control(type='text' id='url' name='url' value=data.url)
+            label.form-label(for='URL') URL
+          .div.form-outline.mb-4
+            input.form-control(type='text' id='authorization' name='authorization' value=data.authorization)
+            label.form-label(for='authorization') Authorization
+          .div.form-outline.mb-4
+            input.form-control(type='text' id='indent-using' name='indent_using' value=data.indent_using)
+            label.form-label(for='indent-using') Indent using
+          .div.form-outline.mb-4
+            input.form-control(type='text' maxlength=1 id='indent-paragraphs' name='indent_paragraphs' pattern='[0-9]' value=data.indent_paragraphs)
+            label.form-label(for='indent-paragraphs') Indent Paragraphs
+          .div
+            span Includes
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='include_first_verse_numbers' name='include_first_verse_numbers' data-setting=data.include_first_verse_numbers)
+            label.form-check-label(for='include_first_verse_numbers') First verse numbers
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='include_footnotes' name='include_footnotes' data-setting=data.include_footnotes)
+            label.form-check-label(for='include_footnotes') Footnotes
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='include_headings' name='include_headings' data-setting=data.include_headings)
+            label.form-check-label(for='include_headings') Headings
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='include_footnote_body' name='include_footnote_body' data-setting=data.include_footnote_body)
+            label.form-check-label(for='include_footnote_body') Footnote Body
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='include_passage_references' name='include_passage_references' data-setting=data.include_passage_references)
+            label.form-check-label(for='include_passage_references') Passage References
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='include_short_copyright' name='include_short_copyright' data-setting=data.include_short_copyright) 
+            label.form-check-label(for='include_short_copyright') Short copyright      
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='include_subheadings' name='include_subheadings' data-setting=data.include_subheadings)
+            label.form-check-label(for='include_subheadings') Subheadings
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='wrapping_div' name='wrapping_div' data-setting=data.wrapping_div)
+            label.form-check-label(for='wrapping_div') Wrapping-div
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='div_classes' name='div_classes' data-setting=data.div_classes)
+            label.form-check-label(for='div_classes') Div-classes
+          .div.form-check.form-switch
+            input.form-check-input(type='checkbox' role='switch' id='include_crossrefs' name='include_crossrefs' data-setting=data.include_crossrefs)
+            label.form-check-label(for='include_crossrefs') Crossrefs
+          button.btn.btn-primary.btn-block(type='submit') Submit
+  script.
+    updatecheckbox()

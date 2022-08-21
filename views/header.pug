@@ -1,0 +1,21 @@
+nav.navbar.navbar-expand-lg.navbar-custom(style={'margin-bottom': '1vh'})
+ div.container-fluid
+  ul.navbar-nav.d-flex.flex-row
+   li.nav-item.me-3.me-lg0.dropdown
+    a.nav-link.dropdown-toggle(href='#' id='navbarDropdown' role='button' data-mdb-toggle='dropdown' aria-expanded='false')
+     i.fas.fa-bars.fa-lg
+    ul.dropdown-menu(aria-labelledby='navbarDropdown')
+      li
+       a.dropdown-item(href='/')
+        i.fa.fa-home.fa-fw 
+        span &nbsp; Home
+      li
+        a.dropdown-item(href='/esv')
+         i.fa.fa-cog.fa-fw
+         span &nbsp; ESV Config
+      li
+        a.dropdown-item(href='#') Action 2
+      li
+        a.dropdown-item(href='#') Action 3
+  div.container-fluid
+     span.navbar-brand.me-2.title #{title}

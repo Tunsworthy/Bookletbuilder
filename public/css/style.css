@@ -1,0 +1,38 @@
+.navbar {
+  background-color: #227C9D;
+}
+
+.btn {
+  margin: 2px -3px;
+  padding: -1px;
+  border: none;
+}
+.btn-normal
+{
+  background-color: transparent;
+}
+
+.btn-first
+{
+  background-color: #745C97;
+  border-radius: 50%; 
+}
+
+
+.btn-start
+{
+  background-color: #745C97;
+  border-radius: 50px 0px 0px 50px; 
+}
+
+.btn-middle
+{
+  background-color: #665388;
+  border-radius: 0%;
+}
+
+.btn-end
+{
+  background-color: #574A79;
+  border-radius: 0px 50px 50px 0px; 
+}
