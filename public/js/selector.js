@@ -1,9 +1,6 @@
-//this page is used to update checkboxes with the correct value if selected or not
-
-
 //Functions to set class Start
-function set_class_first(cb){
-    element.setAttribute("class","btn btn-first btn-floating ripple-surface shadow-none verse")
+function set_class_start(element){
+    element.setAttribute("class","btn btn-start btn-floating ripple-surface shadow-none verse")
     element.setAttribute("style",'')
     element.children[0].setAttribute("style",'color:white')
 }
@@ -20,8 +17,8 @@ function set_class_end(element){
     element.children[0].setAttribute("style",'color:white')
 }
 
-function set_class_first(element){
-    element.setAttribute("class","btn btn-first btn-floating ripple-surface shadow-none verse")
+function set_class_selected(element){
+    element.setAttribute("class","btn btn-selected btn-floating ripple-surface shadow-none verse")
     element.setAttribute("style",'')  
     element.children[0].setAttribute("style",'color:white')
 }
@@ -33,8 +30,50 @@ function reset_class(element){
 };
 ////Functions to set class End
 
+//This is the function that runs when you select a normal element
 function select_normal(element){
-    console.log('in Select Normal for '+ element)
+    console.log('in Select Normal for:')
+    console.log(element)
+
+    switch(true){
+        case document.getElementsByClassName("btn-selected").length >= 1:
+            console.log("in set_range")
+            //Run function to set range
+            set_range(element)
+            break;
+        case element.nextElementSibling.classList.contains('btn-start'):
+            //Run function to set selected as start and Nex to middle
+            set_class_first(element)
+            set_class_middle(element.nextElementSibling)
+            break;
+        default:
+            set_class_selected(element)
+            break;
+    }
+}
+
+
+//This function sets the range for the area you selected
+function set_range(element){
+    //get the currently selected element
+    let selected = document.getElementsByClassName("btn-selected")[0]
+    //get all the verse elements - we need this to find the range to select
+    let allElements = Array.from(document.getElementsByClassName("verse"))
+    //console.log(allElements)
+    
+    //this function will get the index of the selected elements and get their index based on all the elements
+    //The array is then ordered to ensure that the start and end are always the correct way round
+    let order = []
+    order.push(allElements.findIndex(x => x.id === element.id))
+    order.push(allElements.findIndex(x => x.id === selected.id))
+    order.sort(function(a, b){return a - b})
+
+    set_class_start(allElements[order[0]])
+    set_class_end(allElements[order[1]]) 
+
+    for (var i = order[0]+1; i < order[1]; i++) {
+        set_class_middle(allElements[i])
+    }
 }
 
 
