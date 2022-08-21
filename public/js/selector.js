@@ -2,18 +2,21 @@
 function set_class_start(element){
     element.setAttribute("class","btn btn-start btn-floating ripple-surface shadow-none verse")
     element.setAttribute("style",'')
+    element.setAttribute("onclick","select_start(this)")
     element.children[0].setAttribute("style",'color:white')
 }
 
 function set_class_middle(element){
     element.setAttribute("class","btn btn-middle btn-floating ripple-surface shadow-none verse")
     element.setAttribute("style",'')
+    element.setAttribute("onclick","select_middle(this)")
     element.children[0].setAttribute("style",'color:white')    
 }
 
 function set_class_end(element){
     element.setAttribute("class","btn btn-end btn-floating ripple-surface shadow-none verse")
-    element.setAttribute("style",'')  
+    element.setAttribute("style",'')
+    element.setAttribute("onclick","select_end(this)")
     element.children[0].setAttribute("style",'color:white')
 }
 
@@ -43,7 +46,7 @@ function select_normal(element){
             break;
         case element.nextElementSibling.classList.contains('btn-start'):
             //Run function to set selected as start and Nex to middle
-            set_class_first(element)
+            set_class_start(element)
             set_class_middle(element.nextElementSibling)
             break;
         default:
@@ -51,6 +54,66 @@ function select_normal(element){
             break;
     }
 }
+
+
+
+
+//This function is added to middle elements when they are created
+//It works out what to do when a middle section is selected
+function select_middle(element){
+    reset_class(element)
+
+    switch(true){
+        case element.previousElementSibling.classList.contains('btn-start'):
+            reset_class(element.previousElementSibling)
+            break;  
+   
+        case element.previousElementSibling.classList.contains('btn-middle'):
+            set_class_end(element.previousElementSibling)
+            break; 
+    }
+
+    switch(true){
+        case element.nextElementSibling.classList.contains('btn-end'):
+            reset_class(element.nextElementSibling)   
+            break;  
+
+        case element.nextElementSibling.classList.contains('btn-middle'):
+            set_class_start(element.nextElementSibling) 
+            break;
+    }
+}
+
+//Fuction that runs when you select a sart element
+function select_start(element){
+    reset_class(element)
+
+    switch(true){
+        case element.nextElementSibling.classList.contains('btn-middle'):
+            set_class_start(element.nextElementSibling) 
+            break;
+        
+        case element.nextElementSibling.classList.contains('btn-end'):
+            reset_class(element.nextElementSibling) 
+            break;
+    } 
+}
+
+//Fuction that runs when you select a end element
+function select_end(element){
+    reset_class(element)
+
+    switch(true){
+        case element.previousElementSibling.classList.contains('btn-middle'):
+            set_class_end(element.previousElementSibling) 
+            break;
+        
+        case element.previousElementSibling.classList.contains('btn-start'):
+            reset_class(element.previousElementSibling) 
+            break;
+    } 
+}
+
 
 
 //This function sets the range for the area you selected
@@ -75,9 +138,7 @@ function set_range(element){
         set_class_middle(allElements[i])
     }
 }
-
-
-
+//Old code not in use after this line
 function setstart(element){
     console.log(element)
     //let cb = document.getElementById(id)
