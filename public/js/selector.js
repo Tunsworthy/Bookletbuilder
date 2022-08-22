@@ -128,13 +128,107 @@ function set_range(element){
     order.push(allElements.findIndex(x => x.id === selected.id))
     order.sort(function(a, b){return a - b})
 
+    create_input(order,allElements)
     set_class_start(allElements[order[0]])
     set_class_end(allElements[order[1]]) 
+    
 
     for (var i = order[0]+1; i < order[1]; i++) {
         set_class_middle(allElements[i])
     }
 }
+
+//Form Data
+//This function creates a hidden form input 
+/*
+I want a list that shows the current selected ranges
+
+On range create - Add details
+on a range change - update details
+
+*/
+async function create_input(indexes,allElements){
+console.log("in create input")
+    //clone the current form
+    let clone = document.getElementById('clone')
+    let cloned = clone.cloneNode(true)
+    cloned.style.display = ""
+    //Get the elements from the indexs - this will allow us to get the ID of the item to add into the Chapter and Verse
+    let rangeelements = []
+    console.log('indexes elements')
+    console.log(rangeelements.push(allElements[indexes[0]]))
+    console.log(rangeelements.push(allElements[indexes[1]]))
+    
+    //Go through and get the Details we want to extract
+    let details = []
+    for (let i = 0; i < rangeelements.length; i++) {
+        console.log(rangeelements[i].id);
+        //id look slike C14V22
+        let id = rangeelements[i].id
+        let chapter = id.match(/C[0-9]*/)[0].replace("C","")
+        let verse = id.match(/V[0-9]*/)[0].replace("V","")
+        console.log(chapter)
+        console.log(verse)
+        let detail = {id:id, chapter: chapter, verse: verse}
+        details.push(detail)
+    }
+    console.log(details)
+
+    //now that we have all the details we need to get them into the correct spots
+    //Because we have sorted the indexes earlier we know they are in start(begining) and end
+        console.log(cloned.children)
+    for (let i = 0; i < cloned.children.length; i++) {
+
+        for(let x = 0;x < cloned.children[i].children[0].children.length; x++){
+            console.log(cloned.children[i].children[0].children[x].id)
+            let element = cloned.children[i].children[0].children[x]
+           // let childid = cloned.children[i].children[0].children[x].id
+           // console.log(childid == 'start-chapter')
+
+            switch(true){
+                case element.id == "start-chapter":
+                    console.log("chapter-start found")
+                    await set_input_details(cloned.children[i].children[0].children[x],details[0].chapter,details[0].id)
+                break;
+                case element.id == "start-verse":
+                    await set_input_details(cloned.children[i].children[0].children[x],details[0].verse,details[0].id)
+                    console.log("chapter-verse found")
+                break;
+                
+                case element.id == "end-chapter":
+                    await set_input_details(cloned.children[i].children[0].children[x],details[1].chapter,details[1].id)
+                    console.log("chapter-end found")
+                 break;
+                case element.id == "end-verse":
+                    await set_input_details(cloned.children[i].children[0].children[x],details[1].verse,details[1].id)
+                    console.log("verse-end found")
+                 break;
+            }
+        }
+    }
+
+    let formgroup = document.getElementById("form-group")
+    formgroup.appendChild(cloned)
+   // clone
+    console.log(clone)
+    
+
+    
+}
+
+async function set_input_details(element,value,id){
+    element.setAttribute('value',value)
+    newid = element.id.split('-')[1] +"-" + id
+    element.setAttribute('id',newid)
+    element.classList.add('active')
+    return('done')
+    //this function will enter the chapter number into the Begining section
+}
+
+function remove_input(element){
+
+}
+
 
 //Drag Events
 document.addEventListener("drag", function(event) {
@@ -149,3 +243,4 @@ document.addEventListener("drop", function(event) {
 document.addEventListener("dragover", function(event) {
     event.preventDefault();
   });
+

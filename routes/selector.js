@@ -40,4 +40,10 @@ module.exports = function(app){
       );
   });
 
+  app.post('/range',function(req,res){
+    console.log('called post range');
+    console.log(req.body);
+    res.render('range',{startid: req.body.startid,endid: req.body.endid})
+  });
+
 }

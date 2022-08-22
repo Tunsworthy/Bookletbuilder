@@ -1,6 +1,6 @@
 extends layout
 block content
-  .div.align-items-center.h-300.px-4.gx-5
+  .div.align-items-center.h-300.px-4.gx-5.mb-7
    .div.container
     .div.row.justify-content-center
      .div.col-xl-12.col-md-12
@@ -9,11 +9,39 @@ block content
        - for(var i = 0; i < data.chapters.length; i++)
         .div.row
          .div-col-1
-          span.example #{data.chapters[i].chapterno}
+          span #{data.chapters[i].chapterno}
          .div-col-9
           - for(var x = 0; x < data.chapters[i].verses.length; x++)
-           -var chapter = i 
+           -var chapter = data.chapters[i].chapterno
            -var verse = data.chapters[i].verses[x]
            -var id = 'C' + chapter+'V'+verse
-            button.btn.btn.normal.btn-floating.shadow-none.verse(id= id type="button" onclick="select_normal(this)" )
+            button.btn.btn.normal.btn-floating.shadow-none.verse(id= id type="button" onclick="select_normal(this)")
              .span(style="color: black" id= id+'-text') #{verse}
+  div.align-items-center.h-300.px-4.gx-5
+    div.container
+     div.row.justify-content-center
+      div.col-xl-12.col-md-8
+       div.bg-white.rounded.shadow-5-strong.p-5
+         div.row.mb-4
+          div.col
+           span Begining
+          div.col 
+           span End
+         div.form-group(id="form-group")
+          div.row.mb-4(id="clone" style="display: none")
+           div.col(id="form-start-chapter")
+            div.form-outline
+              input.form-control(type='text' id='start-chapter' name='start-chapter' readonly)
+              label.form-label(for='start-chapter') Chapter
+           div.col(id="form-start-verse")
+            div.form-outline
+              input.form-control(type='text' id='start-verse' name='start-verse' readonly)
+              label.form-label(for='start-verse') Verse  
+           div.col(id="form-end-chapter")
+            div.form-outline
+              input.form-control(type='text' id='end-chapter' name='end-chapter' readonly)
+              label.form-label(for='end-chapter') Chapter           
+           div.col(id="form-end-verse")
+            div.form-outline
+              input.form-control(type='text' id='end-verse' name='end-verse' readonly)
+              label.form-label(for='end-verse') Verse
