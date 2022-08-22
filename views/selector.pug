@@ -5,14 +5,15 @@ block content
     .div.row.justify-content-center
      .div.col-xl-12.col-md-12
       .div.bg-white.rounded.shadow-5-strong.p-5
-       - for(var i = 0; i < 20; i++)
+       h1 #{data.name}
+       - for(var i = 0; i < data.chapters.length; i++)
         .div.row
          .div-col-1
-          span #{i+1}
+          span.example #{data.chapters[i].chapterno}
          .div-col-9
-          - for(var x = 0; x < 50; x++)
-           -var chapter = i+1 
-           -var verse = x+1
+          - for(var x = 0; x < data.chapters[i].verses.length; x++)
+           -var chapter = i 
+           -var verse = data.chapters[i].verses[x]
            -var id = 'C' + chapter+'V'+verse
             button.btn.btn.normal.btn-floating.shadow-none.verse(id= id type="button" onclick="select_normal(this)" )
              .span(style="color: black" id= id+'-text') #{verse}
