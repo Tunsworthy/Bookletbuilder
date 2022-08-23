@@ -27,8 +27,13 @@ block content
            span Begining
           div.col 
            span End
-         div.form-group(id="form-group")
-          div.row.mb-4(id="clone" style="display: none")
+         form(id='form')
+          div.form-group(id="form-group")
+         button.btn.btn-primary.btn-block(onclick="addData()") Submit
+         button.btn.btn-primary.btn-block(onclick="range_data_update()") Submit
+          
+         div
+          div.row.mb-4.form-row(id="clone" style="display: none")
            div.col(id="form-start-chapter")
             div.form-outline
               input.form-control(type='text' id='start-chapter' name='start-chapter' readonly)

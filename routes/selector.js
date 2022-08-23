@@ -40,10 +40,10 @@ module.exports = function(app){
       );
   });
 
-  app.post('/range',function(req,res){
-    console.log('called post range');
+  app.post('/selectionsaver',function(req,res){
+    console.log('called post selectionsaver');
     console.log(req.body);
-    res.render('range',{startid: req.body.startid,endid: req.body.endid})
+    res.redirect('/selector')
   });
 
 }

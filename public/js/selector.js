@@ -90,6 +90,7 @@ function select_start(element){
     switch(true){
         case element.nextElementSibling.classList.contains('btn-middle'):
             set_class_start(element.nextElementSibling) 
+            range_data_update(element.id,element.nextElementSibling.id,"start")
             break;
         
         case element.nextElementSibling.classList.contains('btn-end'):
@@ -104,7 +105,8 @@ function select_end(element){
 
     switch(true){
         case element.previousElementSibling.classList.contains('btn-middle'):
-            set_class_end(element.previousElementSibling) 
+            set_class_end(element.previousElementSibling)
+            range_data_update(element.id,element.previousElementSibling.id,"end")
             break;
         
         case element.previousElementSibling.classList.contains('btn-start'):
@@ -129,6 +131,7 @@ function set_range(element){
     order.sort(function(a, b){return a - b})
 
     create_input(order,allElements)
+    range_data_add(allElements[order[0]].id,allElements[order[1]].id)
     set_class_start(allElements[order[0]])
     set_class_end(allElements[order[1]]) 
     
@@ -153,6 +156,7 @@ console.log("in create input")
     let clone = document.getElementById('clone')
     let cloned = clone.cloneNode(true)
     cloned.style.display = ""
+    cloned.setAttribute("id","")
     //Get the elements from the indexs - this will allow us to get the ID of the item to add into the Chapter and Verse
     let rangeelements = []
     console.log('indexes elements')
@@ -208,10 +212,10 @@ console.log("in create input")
     }
 
     let formgroup = document.getElementById("form-group")
-    formgroup.appendChild(cloned)
-   // clone
-    console.log(clone)
-    
+    console.log(formgroup)
+    console.log(cloned)
+    formgroup.append(cloned)
+   // clone   
 
     
 }
@@ -221,12 +225,24 @@ async function set_input_details(element,value,id){
     newid = element.id.split('-')[1] +"-" + id
     element.setAttribute('id',newid)
     element.classList.add('active')
-    return('done')
+    return(element)
     //this function will enter the chapter number into the Begining section
 }
 
-function remove_input(element){
 
+//
+function formsubmit(){
+    //const form = document.getElementById('form');
+    const form = document.getElementsByClassName('form-row')[0]
+    console.log(form)
+    const formData = new FormData(form);
+    console.log(formData)
+    //const output = document.getElementById('output');
+
+    for (const [key, value] of formData) {
+        console.log(key+":" +value)
+        //output.textContent += `${key}: ${value}\n`;
+    }
 }
 
 
