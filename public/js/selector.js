@@ -50,6 +50,7 @@ function select_normal(element){
             //Run function to set selected as start and Nex to middle
             set_class_start(element)
             set_class_middle(element.nextElementSibling)
+            range_data_update(element.nextElementSibling.id,element.id,"start")
             break;
         default:
             set_class_selected(element)
@@ -61,14 +62,18 @@ function select_normal(element){
 //It works out what to do when a middle section is selected
 function select_middle(element){
     reset_class(element)
-
+    let set_start = false
+    let set_end = false
     switch(true){
         case element.previousElementSibling.classList.contains('btn-start'):
             reset_class(element.previousElementSibling)
+            //range_data_update(element.id,element.previousElementSibling.id,"start")
             break;  
    
         case element.previousElementSibling.classList.contains('btn-middle'):
             set_class_end(element.previousElementSibling)
+            set_end = true
+            //get_start_range(element.previousElementSibling)
             break; 
     }
 
@@ -78,9 +83,16 @@ function select_middle(element){
             break;  
 
         case element.nextElementSibling.classList.contains('btn-middle'):
-            set_class_start(element.nextElementSibling) 
+            set_class_start(element.nextElementSibling)
+            set_start = true 
             break;
     }
+
+    if(set_end && set_start ){
+        console.log("both set to true start: "+ set_start + " end: "+ set_end)
+        range_data_update_fmiddle(element.nextElementSibling,element.previousElementSibling)
+    }
+
 }
 
 //Fuction that runs when you select a sart element
@@ -89,8 +101,8 @@ function select_start(element){
 
     switch(true){
         case element.nextElementSibling.classList.contains('btn-middle'):
-            set_class_start(element.nextElementSibling) 
-            range_data_update(element.id,element.nextElementSibling.id,"start")
+            set_class_start(element.nextElementSibling)
+            //range_data_update(element.id,element.nextElementSibling.id,"start")
             break;
         
         case element.nextElementSibling.classList.contains('btn-end'):
@@ -130,15 +142,34 @@ function set_range(element){
     order.push(allElements.findIndex(x => x.id === selected.id))
     order.sort(function(a, b){return a - b})
 
-    create_input(order,allElements)
+    create_input(allElements[order[0]].id,allElements[order[1]].id)
     range_data_add(allElements[order[0]].id,allElements[order[1]].id)
     set_class_start(allElements[order[0]])
     set_class_end(allElements[order[1]]) 
     
 
     for (var i = order[0]+1; i < order[1]; i++) {
+        if(allElements[i].classList.contains('btn-start')|| allElements[i].classList.contains('btn-end')){
+            console.log('element found in middle of range that is a start or end')
+            //need to create a range remove and a delete row
+        }
         set_class_middle(allElements[i])
     }
+    calculate_ranges()
+}
+
+
+//passed from the middle when it is setting a end
+function get_start_range(new_end){
+    console.log("in get start")
+    console.log(new_end)
+    //Aim - get the closests start previous to the new end
+    let allstarts = Array.from(document.getElementsByClassName('btn-start')).reverse()
+    console.log(allstarts)
+    let indexs = allstarts.findIndex(x => x.id < new_end.id)
+   console.log(indexs)
+   console.log(allstarts[indexs])
+
 }
 
 //Form Data
@@ -150,7 +181,19 @@ On range create - Add details
 on a range change - update details
 
 */
-async function create_input(indexes,allElements){
+function split_id_details(id){
+    console.log("in split_id_details")
+    let chapter = id.match(/C[0-9]*/)[0].replace("C","")
+    let verse = id.match(/V[0-9]*/)[0].replace("V","")
+
+    let detail = {chapter: chapter, verse: verse,id: id}
+    console.log(detail)
+    return(detail)
+}
+
+
+
+async function create_input(start_id,end_id){
 console.log("in create input")
     //clone the current form
     let clone = document.getElementById('clone')
@@ -158,67 +201,56 @@ console.log("in create input")
     cloned.style.display = ""
     cloned.setAttribute("id","")
     //Get the elements from the indexs - this will allow us to get the ID of the item to add into the Chapter and Verse
-    let rangeelements = []
-    console.log('indexes elements')
-    console.log(rangeelements.push(allElements[indexes[0]]))
-    console.log(rangeelements.push(allElements[indexes[1]]))
     
-    //Go through and get the Details we want to extract
-    let details = []
-    for (let i = 0; i < rangeelements.length; i++) {
-        console.log(rangeelements[i].id);
-        //id look slike C14V22
-        let id = rangeelements[i].id
-        let chapter = id.match(/C[0-9]*/)[0].replace("C","")
-        let verse = id.match(/V[0-9]*/)[0].replace("V","")
-        console.log(chapter)
-        console.log(verse)
-        let detail = {id:id, chapter: chapter, verse: verse}
-        details.push(detail)
-    }
-    console.log(details)
+    //split out the start_id and end_id to their needed chapter and verse
+    let start_details = split_id_details(start_id)
+    let end_details = split_id_details(end_id)
 
-    //now that we have all the details we need to get them into the correct spots
-    //Because we have sorted the indexes earlier we know they are in start(begining) and end
-        console.log(cloned.children)
-    for (let i = 0; i < cloned.children.length; i++) {
+    console.log(cloned.getElementsByTagName('input'))
+    var elements = cloned.getElementsByTagName('input')
+    for (let i = 0; i < elements.length; i++){
 
-        for(let x = 0;x < cloned.children[i].children[0].children.length; x++){
-            console.log(cloned.children[i].children[0].children[x].id)
-            let element = cloned.children[i].children[0].children[x]
-           // let childid = cloned.children[i].children[0].children[x].id
-           // console.log(childid == 'start-chapter')
-
-            switch(true){
-                case element.id == "start-chapter":
-                    console.log("chapter-start found")
-                    await set_input_details(cloned.children[i].children[0].children[x],details[0].chapter,details[0].id)
-                break;
-                case element.id == "start-verse":
-                    await set_input_details(cloned.children[i].children[0].children[x],details[0].verse,details[0].id)
-                    console.log("chapter-verse found")
-                break;
-                
-                case element.id == "end-chapter":
-                    await set_input_details(cloned.children[i].children[0].children[x],details[1].chapter,details[1].id)
-                    console.log("chapter-end found")
-                 break;
-                case element.id == "end-verse":
-                    await set_input_details(cloned.children[i].children[0].children[x],details[1].verse,details[1].id)
-                    console.log("verse-end found")
-                 break;
-            }
+        switch(true){
+            case elements[i].id == "start-chapter":
+                console.log("chapter-start found")
+                await set_input_details(elements[i],start_details.chapter,start_id)
+            break;
+            case elements[i].id  == "start-verse":
+                await set_input_details(elements[i],start_details.verse,start_id)
+                console.log("chapter-verse found")
+            break;
+            
+            case elements[i].id  == "end-chapter":
+                await set_input_details(elements[i],end_details.chapter,end_id)
+                console.log("chapter-end found")
+             break;
+            case elements[i].id  == "end-verse":
+                await set_input_details(elements[i],end_details.verse,end_id)
+                console.log("verse-end found")
+             break;
         }
     }
+
 
     let formgroup = document.getElementById("form-group")
     console.log(formgroup)
     console.log(cloned)
     formgroup.append(cloned)
-   // clone   
-
-    
 }
+
+//this function will update the input feilds with the new vaules
+function update_input(previous_id,current_id){
+
+    let input_chapter = document.getElementById("chapter-"+previous_id)
+    let input_verse = document.getElementById("verse-"+previous_id)
+
+    let details = split_id_details(current_id)
+
+    set_input_details(input_chapter,details.chapter,current_id)
+    set_input_details(input_verse,details.verse,current_id)
+
+}
+
 
 async function set_input_details(element,value,id){
     element.setAttribute('value',value)
@@ -245,6 +277,28 @@ function formsubmit(){
     }
 }
 
+
+
+
+//this will get all the starts and end and produce a list
+function calculate_ranges(){
+    console.log("calcuating ranges")
+    
+    let allElements = Array.from(document.getElementsByClassName("verse"))
+    let all = []
+    for (let i = 0; i < allElements.length; i++){
+        switch(true){
+            case allElements[i].classList.contains('btn-start'):
+                all.push(allElements[i])
+                break;
+           case allElements[i].classList.contains('btn-end'):
+                all.push(allElements[i])
+                break;
+        }
+    }
+    console.log(all)  
+
+}
 
 //Drag Events
 document.addEventListener("drag", function(event) {

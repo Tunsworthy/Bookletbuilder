@@ -1,28 +1,9 @@
 extends layout
 block content
-  .div.align-items-center.h-300.px-4.gx-5.mb-7
-   .div.container
-    .div.row.justify-content-center
-     .div.col-xl-12.col-md-12
-      .div.bg-white.rounded.shadow-5-strong.p-5
-       h1 #{data.name}
-       - for(var i = 0; i < data.chapters.length; i++)
-        .div.row
-         .div-col-1
-          span #{data.chapters[i].chapterno}
-         .div-col-9
-          - for(var x = 0; x < data.chapters[i].verses.length; x++)
-           -var chapter = data.chapters[i].chapterno
-           -var verse = data.chapters[i].verses[x]
-           -var id = 'C' + chapter+'V'+verse
-            button.btn.btn.normal.btn-floating.shadow-none.verse(id= id type="button" onclick="select_normal(this)")
-             .span(style="color: black" id= id+'-text') #{verse}
-  div.align-items-center.h-300.px-4.gx-5
-    div.container
-     div.row.justify-content-center
-      div.col-xl-12.col-md-8
+    div.row
+      div.col-5
        div.bg-white.rounded.shadow-5-strong.p-5
-         div.row.mb-4
+         div.row
           div.col
            span Begining
           div.col 
@@ -30,7 +11,22 @@ block content
          form(id='form')
           div.form-group(id="form-group")
          button.btn.btn-primary.btn-block(onclick="addData()") Submit
-         button.btn.btn-primary.btn-block(onclick="range_data_update()") Submit
+
+      div.col-7
+       div.bg-white.rounded.shadow-5-strong.p-5
+        h1 #{data.name}
+        - for(var i = 0; i < data.chapters.length; i++)
+         .div.row
+          .div-col-1
+           span #{data.chapters[i].chapterno}
+          .div-col-9
+           - for(var x = 0; x < data.chapters[i].verses.length; x++)
+            -var chapter = data.chapters[i].chapterno
+            -var verse = data.chapters[i].verses[x]
+            -var id = 'C' + chapter+'V'+verse
+             button.btn.btn.normal.btn-floating.shadow-none.verse(id= id type="button" onclick="select_normal(this)")
+              .span(style="color: black" id= id+'-text') #{verse}
+  
           
          div
           div.row.mb-4.form-row(id="clone" style="display: none")
