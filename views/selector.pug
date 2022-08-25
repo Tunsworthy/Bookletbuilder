@@ -1,7 +1,7 @@
 extends layout
 block content
     div.row
-      div.col-5
+      div.col-3.order-1.col-sm3
        div.bg-white.rounded.shadow-5-strong.p-5
          div.row
           div.col
@@ -12,7 +12,7 @@ block content
           div.form-group(id="form-group")
          button.btn.btn-primary.btn-block(onclick="addData()") Submit
 
-      div.col-7
+      div.col-9.col-sm3.order-2
        div.bg-white.rounded.shadow-5-strong.p-5
         h1 #{data.name}
         - for(var i = 0; i < data.chapters.length; i++)
