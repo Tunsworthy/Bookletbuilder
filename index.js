@@ -17,7 +17,7 @@ async function dbconnection(){
 				console.log('Database connection established')
 		},
 		error => {
-			console.log(error.reason),
+			console.log(error.reason)
 			dbconnection()
 		});
 }
