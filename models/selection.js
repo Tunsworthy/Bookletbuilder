@@ -25,7 +25,7 @@ var Schema = mongoose.Schema;
       type: String
     },
     version: {
-      type: String
+      type: Number
     },
     book: {
       type: String

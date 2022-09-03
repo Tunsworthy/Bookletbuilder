@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose'),
-BookSchema = mongoose.model('BookSchema')
+BookSchema = mongoose.model('BookSchema'),
+SelectionSchema = mongoose.model('SelectionSchema')
 
 var exports = module.exports;
 module.exports = function(app){
@@ -43,7 +44,12 @@ module.exports = function(app){
   app.post('/selectionsaver',function(req,res){
     console.log('called post selectionsaver');
     console.log(req.body);
-    res.redirect('/selector')
+    let new_selection = new SelectionSchema(req.body);
+    new_selection.save(function(err,sel){
+      if(err)
+       res.send(err)
+      res.redirect('/selector')
+    })
   });
 
 }
