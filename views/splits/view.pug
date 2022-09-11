@@ -1,0 +1,64 @@
+extends ../layout
+block content
+    .containter
+     .row
+      .col
+       h4 My Splits
+    .row
+     .col
+        table(class="table table-hover table-striped")
+          tr
+           td
+            span ID
+           td
+            span book
+           td
+            span version
+           td 
+            span splits
+           td
+            span actions
+          each split in data
+           tr
+            td
+             span #{split._id}
+            td
+             span #{split.book}
+            td
+             span #{split.__v}
+            td
+             a.btn.collapsible(type="button" data-mdb-toggle="collapse" data-mdb-target="#collapse_target_"+split._id aria-expanded="false" aria-controls="collapse_target_"+split._id ) +
+             div.collapse.mt-3(id="collapse_target_"+split._id)
+              table
+               tr
+                td(colspan="2")
+                 span Start
+                td(colspan="2")
+                 span End
+               tr
+                td
+                 span Chapter
+                td
+                 span Verse
+                td
+                 span Chapter
+                td
+                 span Verse
+               each range in split.sections
+                -let schapter = range.range_start_id.match(/C[0-9]*/)[0].replace("C","")
+                -let sverse = range.range_start_id.match(/V[0-9]*/)[0].replace("V","")
+                -let echapter = range.range_end_id.match(/C[0-9]*/)[0].replace("C","")
+                -let everse = range.range_end_id.match(/V[0-9]*/)[0].replace("V","")
+                tr
+                 td
+                  span #{schapter}
+                 td
+                  span #{sverse}
+                 td
+                  span #{echapter}
+                 td
+                  span #{everse}
+            td
+             button.btn.btn-secondary.btn-sm.ml-1.me-1(href='#') Edit
+             |
+             button.btn.btn-danger.btn-sm.ml-1.me-1(href='#') Delete

@@ -6,6 +6,7 @@ This files contains the functions to submit the selection data
 
 
 async function submit_data(book){
+  let url = '/split'
 
   
   //This function will submit data to selectionsaver
@@ -17,7 +18,6 @@ async function submit_data(book){
   console.log("body returned")
   console.log(body)
 
-  let url = '/selectionsaver'
   let fetchoptions ={
     method: "Post",
     headers: {
@@ -59,7 +59,7 @@ async function build_body(book,selection,userid,version){
         userid: "Example",
         version: 1,
         book: book, 
-        selection: selection
+        sections: selection
     }
 
     //selection.push(body)
