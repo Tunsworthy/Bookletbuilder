@@ -52,7 +52,7 @@ app.post('/split/update/:id',function(req,res){
 });
 
 //Delete split by ID
-app.post('/split/delete/:id',function(req,res){
+app.delete('/split/delete/:id',function(req,res){
   console.log('called post split');
   console.log(req.body);
   SplitsSchema.findOneAndDelete({__id: req.params.id},req.body,function(err,split){

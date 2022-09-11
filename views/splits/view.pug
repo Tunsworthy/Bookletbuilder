@@ -1,5 +1,6 @@
 extends ../layout
 block content
+    script(type='text/javascript' src='/js/splits_page.js')
     .containter
      .row
       .col
@@ -8,8 +9,6 @@ block content
      .col
         table(class="table table-hover table-striped")
           tr
-           td
-            span ID
            td
             span book
            td
@@ -20,8 +19,6 @@ block content
             span actions
           each split in data
            tr
-            td
-             span #{split._id}
             td
              span #{split.book}
             td
@@ -61,4 +58,4 @@ block content
             td
              button.btn.btn-secondary.btn-sm.ml-1.me-1(href='#') Edit
              |
-             button.btn.btn-danger.btn-sm.ml-1.me-1(href='#') Delete
+             button.btn.btn-danger.btn-sm.ml-1.me-1(onclick='delete_split("'+split._id+'")') Delete
