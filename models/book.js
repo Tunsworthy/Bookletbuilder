@@ -24,6 +24,9 @@ var Schema = mongoose.Schema;
 
 
   const BookSchema = new Schema({
+    order: {
+      type: Number
+    },
     name: {
       type: String
     },

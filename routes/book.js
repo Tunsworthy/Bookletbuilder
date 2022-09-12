@@ -17,6 +17,14 @@ module.exports = function(app){
     BookSchema.find({},'name',function(err,book){
         if (err)
             res.send(err)
+        res.render('book/view',{title: process.env.PROGRAM_NAME, data: book})
+    })
+  });
+
+  app.get('/booklist',function(req,res){
+    BookSchema.find({},'name',function(err,book){
+        if (err)
+            res.send(err)
         res.json(book)
     })
   });

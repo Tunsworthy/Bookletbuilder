@@ -1,0 +1,19 @@
+extends ../layout
+block content
+    .containter
+     .row
+      .col
+       h4 Book List
+    .row
+     .col
+        table(class="table table-hover table-striped")
+          tr
+           td
+            span book
+           td
+            span actions
+          each book in data
+           tr
+            td
+             span #{book.name}
+             a.btn.btn-secondary.btn-sm.ml-1.me-1(href='/selector/'+book.name) New

@@ -30,11 +30,13 @@ var app = express();
     app.set('view engine', 'pug');
     app.use(favicon(__dirname + '/public/images/favicon.png'));
     app.use(logger('dev'));
-    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.urlencoded({ extended: true,limit: '100mb' }));
     app.use(bodyParser.json());
     app.use(methodOverride('_method'));
     //app.use(require('stylus').middleware(__dirname + '/public'));
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.json({limit: '100mb'}));
+  
 
 
     app.use('/md', express.static(__dirname + '/node_modules/material-components-web/dist')); // redirect CSS bootstrap
