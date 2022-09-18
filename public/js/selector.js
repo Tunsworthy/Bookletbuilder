@@ -37,6 +37,7 @@ function reset_class(element){
 
 //This is the function that runs when you select a normal element
 function select_normal(element){
+
     console.log('in Select Normal for:')
     console.log(element)
 

@@ -15,10 +15,18 @@ html
         link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap')
 
         script(type='text/javascript' src='/js/checkbox.js')
+        script(type='text/javascript' src='/js/alerts.js')
         script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js') 
       
   body
     include header
+    .container-fluid
+     .row
+      .col(class="col-12")
+       div(id="alerts")
+    if alert
+     script.
+      alertbox(!{alert})
     block content
 
     include footer

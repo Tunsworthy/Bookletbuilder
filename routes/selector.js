@@ -1,4 +1,10 @@
 'use strict';
+
+let alertdata = {
+  "message" : "An Example Alert",
+  "type" : "Success"
+}
+
 var mongoose = require('mongoose'),
 BookSchema = mongoose.model('BookSchema')
 
@@ -10,7 +16,7 @@ module.exports = function(app){
         if (err)
             res.send(err)
         console.log(book)
-        res.render('selector',{title: process.env.PROGRAM_NAME, data: book});
+        res.render('selector',{title: process.env.PROGRAM_NAME, data: book, alert: JSON.stringify(alertdata)});
     })
   });
 
