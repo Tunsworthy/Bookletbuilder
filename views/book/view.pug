@@ -1,20 +1,17 @@
 extends ../layout
 block content
-    .containter
-     .row
-      .col
-       h4 Book List
-    .row
-     .col
+    div.col-md-5.offset-md-3
+      div.bg-white.rounded.shadow-5-strong.p-5
+        h3.text-center Create New Selection
         table(class="table table-hover table-striped")
           tr
            td
-            span book
+            span Book
            td
-            span actions
+            span Action
           each book in data
            tr
             td
              span #{book.name}
             td
-             a.btn.btn-secondary.btn-sm.ml-1.me-1(href='/selector/'+book.name) New
+             a.btn.btn-secondary.btn-sm.ml-1.me-1(href='/selector/'+book.name) Create
