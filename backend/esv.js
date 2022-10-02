@@ -33,10 +33,8 @@ Response
         switch(data.toLowerCase()){
             case "on":
                 return(true)
-                break;
             case "off":
                 return(false)
-                break;
         }
     }
 
@@ -69,7 +67,6 @@ Response
                 "include-headings": await convert_config(esvconfig.include_headings),
                 "include-footnote-body":await convert_config(esvconfig.include_footnote_body),
                 "include-footnote": await convert_config(esvconfig.include_footnotes),
-                "include-first-verse-numbers" : await convert_config(esvconfig.include_first_verse_numbers),
                 "include-passage-references":await convert_config(esvconfig.include_passage_references),
                 "include-short-copyright":await convert_config(esvconfig.include_short_copyright),
                 "indent-poetry-lines":1,
