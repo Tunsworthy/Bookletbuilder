@@ -27,6 +27,16 @@ app.get('/split/:id',function(req,res){
   })
 });
 
+//Get Splits by ID - find a split by it's ID 0 retunrs as json
+app.get('/data_split',function(req,res){
+  console.log("called data_split")
+  SplitsSchema.findOne({__id: req.params.id},function(err,data){
+    if (err)
+        res.send(err)
+    res.json(data)
+  })
+});
+
 //Save new Split
   app.post('/split',function(req,res){
     console.log('called post split');

@@ -1,38 +1,95 @@
 'use strict';
-//const axios = require('axios').default;
-const fs = require('fs').promises;
-var mongoose = require('mongoose'),
-  Booklet = mongoose.model('BookletSchema'),
-  SplitsSchema = mongoose.model('SplitsSchema'),
+const axios = require('axios').default
+let mongoose = require('mongoose'),
   ESVConfig = mongoose.model('ESVConfig')
 
 /*
-This is the module for getting all the passages
-It will get one at a time and report back to the database when its finished
+This module is for getting the passags from ESV
 
-Details to initiate
--Userid
--Bookletid
-
+Response 
+{
+  query: 'John 11:35–12:1',
+  canonical: 'John 11:35–12:1',
+  parsed: [ [ 43011035, 43012001 ] ],
+  passage_meta: [
+    {
+      canonical: 'John 11:35–12:1',
+      chapter_start: [Array],
+      chapter_end: [Array],
+      prev_verse: 43011034,
+      next_verse: 43012002,
+      prev_chapter: [Array],
+      next_chapter: [Array]
+    }
+  ],
+  passages: [
+  ]
+}
 */
+
+    async function convert_config(data){
+        //console.log(data)
+        // on or off to true and false
+        switch(data.toLowerCase()){
+            case "on":
+                return(true)
+                break;
+            case "off":
+                return(false)
+                break;
+        }
+    }
 
     //Function to get ESV Config
     async function get_esv_config(){
         try{
             let rdata = await ESVConfig.find({})
-            return(rdata)
+            return(rdata[0])
         }
         catch(err){
             return(err)
         }        
     }
 
-    
+    async function get_esv_passage(passage){            
+            let esvconfig = await get_esv_config()
+            //This function will submit data to selectionsaver
+            let url = esvconfig.url
+            let config ={
+              method: "get",
+              url: esvconfig.url,
+              headers: {
+                "Authorization": 'Token '+ esvconfig.authorization
+              },
+              params: {
+                "include-first-verse-numbers" : await convert_config(esvconfig.include_first_verse_numbers),
+                "include-footnotes": await convert_config(esvconfig.include_footnotes),
+                "indent-using": esvconfig.indent_using,
+                "indent-paragraphs": esvconfig.indent_paragraphs,
+                "include-headings": await convert_config(esvconfig.include_headings),
+                "include-footnote-body":await convert_config(esvconfig.include_footnote_body),
+                "include-footnote": await convert_config(esvconfig.include_footnotes),
+                "include-first-verse-numbers" : await convert_config(esvconfig.include_first_verse_numbers),
+                "include-passage-references":await convert_config(esvconfig.include_passage_references),
+                "include-short-copyright":await convert_config(esvconfig.include_short_copyright),
+                "indent-poetry-lines":1,
+                "include-subheadings":await convert_config(esvconfig.include_subheadings),
+                "wrapping-div":await convert_config(esvconfig.wrapping_div),
+                "div-classes":await convert_config(esvconfig.div_classes),
+                "include-crossrefs":await convert_config(esvconfig.include_crossrefs),
+                //q format "John+11:35-12:1" <Book>+<Chapter>:<Verse>-<Chapter>:<Verse>
+                "q": passage
+            }
+            }
+            
+            const response = await axios(config);
+            return(response.data)
+            //console.log(response.data)
+          }
 
-    async function get_passage(esvconfig,passage){
 
-    }
+
 module.exports = {
     //list of functions
-    get_esv_config
+    get_esv_passage
 }
