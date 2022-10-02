@@ -52,7 +52,7 @@ Response
     async function get_esv_passage(passage){            
             let esvconfig = await get_esv_config()
             //This function will submit data to selectionsaver
-            let url = esvconfig.url
+            
             let config ={
               method: "get",
               url: esvconfig.url,
