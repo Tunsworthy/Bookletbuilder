@@ -2,11 +2,11 @@
 
 let query_builder = require('.././backend/query_builder.js')
 
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
   Booklet = mongoose.model('BookletSchema'),
   SplitsSchema = mongoose.model('SplitsSchema')
 
-var exports = module.exports;
+  const exports = module.exports;
 module.exports = function(app){
   //Route used to create a new booklet
   app.get('/booklet/new',function(req,res){
@@ -16,7 +16,7 @@ module.exports = function(app){
   app.post('/booklet/new',function(req,res){
     console.log('called post');
     console.log(req.body);
-    var new_entry = new Booklet(req.body);
+    let new_entry = new Booklet(req.body);
     new_entry.save(function(err,entry){
       if(err)
        res.send(err)

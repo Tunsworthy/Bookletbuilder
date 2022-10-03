@@ -1,8 +1,8 @@
 'use strict';
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
   ESVConfig = mongoose.model('ESVConfig')
 
-var exports = module.exports;
+  const exports = module.exports;
 module.exports = function(app){
   // Event Routes
   app.get('/esv',function(req,res){
@@ -26,7 +26,7 @@ module.exports = function(app){
   app.post('/esvconfig',function(req,res){
     console.log('called post');
     console.log(req.body);
-    var new_config = new ESVConfig(req.body);
+    let new_config = new ESVConfig(req.body);
     new_config.save(function(err,config){
       if(err)
        res.send(err)

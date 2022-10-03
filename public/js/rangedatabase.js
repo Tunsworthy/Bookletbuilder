@@ -38,7 +38,7 @@ function clearData(db) {
       // report the success of our request
       console.log("Request successful")
     };
-  };
+  }
 
 // Set up the database tables if this has not already been done
 openRequest.addEventListener('upgradeneeded', (e) => {
@@ -58,7 +58,6 @@ openRequest.addEventListener('upgradeneeded', (e) => {
   });
 
 function range_data_add(start_id,end_id){
-    //e.preventDefault();
 
     const newItem = {
       range_start_id: start_id,
@@ -76,11 +75,12 @@ function range_data_add(start_id,end_id){
 
      transaction.addEventListener('complete', () => {
         console.log('Transaction completed: database modification finished.');
-        //displayData();
+
     });
     transaction.addEventListener('error', () => console.log('Transaction not opened due to error'));
 }
 
+/*
 //This function updates the data in the range
 // When a start is selected get all verses 
 //find the index of the start
@@ -91,6 +91,7 @@ function range_data_add(start_id,end_id){
 //for from that index and find the next start
 
 //if it's coming from a middle 
+*/
 function range_data_update_fmiddle(new_start,new_end){
   
   console.log(new_start.id)
@@ -104,8 +105,8 @@ function range_data_update_fmiddle(new_start,new_end){
     console.log(start_index)
     console.log(end_index)
 
-    var start_slice = all_elements.slice(start_index);
-    var end_slice = all_elements.slice(0,end_index);
+    const start_slice = all_elements.slice(start_index);
+    const end_slice = all_elements.slice(0,end_index);
   //if it's a new end find the matching start and upadte the range
   console.log(start_slice)
   console.log(end_slice.reverse())
@@ -139,18 +140,21 @@ function range_data_update(previous_id,current_id,from){
   const transaction = db.transaction(['range_os'], 'readwrite');
   const objectStore = transaction.objectStore('range_os');
 
+  const index = null
+  const selection = null
+
   switch(from){
     case "start":
-      var index = objectStore.index("range_start_id")
-      var selection = "range_start_id"
+      index = objectStore.index("range_start_id")
+      selection = "range_start_id"
       break;
     case "end":
-      var index = objectStore.index("range_end_id")
-      var selection = "range_end_id"
+      index = objectStore.index("range_end_id")
+      selection = "range_end_id"
       break;
   }
 
-  var request = index.get(previous_id)
+  let request = index.get(previous_id)
   
   request.onsuccess = () => {
     console.log(request.result);

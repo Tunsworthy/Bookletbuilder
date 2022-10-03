@@ -1,8 +1,8 @@
 'use strict';
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
 SplitsSchema = mongoose.model('SplitsSchema')
 
-var exports = module.exports;
+const exports = module.exports;
 module.exports = function(app){
   // Event Routes
 

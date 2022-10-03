@@ -1,5 +1,5 @@
 //Required modules
-var express = require('express')
+const express = require('express')
     , mongoose = require('mongoose')
     , models = require('./models')
     , http = require('http')
@@ -23,7 +23,7 @@ async function dbconnection(){
 }
 dbconnection().catch(error => console.log(error))
 
-var app = express();
+const app = express();
 
     app.set('port', process.env.PORT || 3000);
     app.set('views', __dirname + '/views');
@@ -33,18 +33,15 @@ var app = express();
     app.use(bodyParser.urlencoded({ extended: true,limit: '100mb' }));
     app.use(bodyParser.json());
     app.use(methodOverride('_method'));
-    //app.use(require('stylus').middleware(__dirname + '/public'));
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.json({limit: '100mb'}));
   
-
-
     app.use('/md', express.static(__dirname + '/node_modules/material-components-web/dist')); // redirect CSS bootstrap
 
 //load all routes from route file
-    var routePath="./routes/"; //add one folder then put your route files there my router folder name is routers
+    const routePath="./routes/"; //add one folder then put your route files there my router folder name is routers
     fs.readdirSync(routePath).forEach(function(file) {
-        var route=routePath+file;
+        const route=routePath+file;
         require(route)(app);
     });
  

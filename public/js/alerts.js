@@ -10,10 +10,10 @@ Json for Alerts
 
 //Create a dismissable alert, inputs are message and type
 function alertbox(data) {
-	var alerts = document.getElementById("alerts");
+	let alerts = document.getElementById("alerts");
 
 	//This section builds the message
-	var coldiv = document.createElement("div");
+	let coldiv = document.createElement("div");
     coldiv.setAttribute('role','alert')
     coldiv.setAttribute('class', 'alert alert-dismissible fade show')
 
@@ -29,14 +29,14 @@ function alertbox(data) {
             break;
     }
 
-	var messagetext = document.createTextNode(data.message)
+	let messagetext = document.createTextNode(data.message)
 	
 
-	var button = document.createElement("button")
+	let button = document.createElement("button")
 	    button.setAttribute('class', 'close btn-close')
 	    button.setAttribute('data-mdb-dismiss', 'alert')
 	    button.setAttribute('aria-label', 'Close')
-	var spanbutton = document.createElement("span")
+    let spanbutton = document.createElement("span")
 	    spanbutton.setAttribute('aria-hidden', 'true')
 
 	coldiv.appendChild(messagetext)

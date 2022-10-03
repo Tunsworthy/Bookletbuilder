@@ -9,7 +9,7 @@ Get from the booklet table
             -Build the correct query to send to ESV
 */
 
-let mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
   Booklet = mongoose.model('BookletSchema'),
   Splits = mongoose.model('SplitsSchema')
 
@@ -39,7 +39,6 @@ async function get_splits_details(splitid){
 }
 
 /*
-
 A section should be passed looking like this
             "range_start_id": "C1V1",
             "range_end_id": "C1V17",
@@ -49,43 +48,35 @@ A section should be passed looking like this
 */
 async function format_sections(section){
 
-    let s_chapter = section.range_start_id.match(/C[0-9]*/)[0].replace("C","")
-    let s_verse = section.range_start_id.match(/V[0-9]*/)[0].replace("V","")
-    let e_chapter = section.range_end_id.match(/C[0-9]*/)[0].replace("C","")
-    let e_verse = section.range_end_id.match(/V[0-9]*/)[0].replace("V","")
-
+    let s_chapter = section.range_start_id.match(/C\d{1,2}/)[0].replace("C","")
+    let s_verse = section.range_start_id.match(/V\d{1,2}/)[0].replace("V","")
+    let e_chapter = section.range_end_id.match(/C\d{1,2}/)[0].replace("C","")
+    let e_verse = section.range_end_id.match(/V\d{1,2}/)[0].replace("V","")
+    
     return(s_chapter+":"+s_verse+"-"+e_chapter+":"+e_verse)
 }
-
-
 
 async function query_builder(bookletid){
     console.log(bookletid)
     let formatted_selection_array = []
     let selected_splits_data = await get_booklet_details(bookletid)
     let split_id
-    //console.log(selected_splits_data)
-    for(let i = 0; i < selected_splits_data.length; i++){
-        //console.log('in for loop i')
-       // console.log(selected_splits_data[i].split_id)
-       let splits_data = await get_splits_details(selected_splits_data[i].split_id)
-       split_id = splits_data._id
-       //console.log(splits_data)
 
-       for(let a = 0; a < splits_data.sections.length; a++){
-       // console.log(splits_data.sections[a])
-       let formatted_selection = await format_sections(splits_data.sections[a])
-        formatted_selection_array.push(splits_data.book+"+"+formatted_selection) 
-        //console.log(formatted_selection)
-       }
-        
+    for (let selected_splits of selected_splits_data){
+        let splits_data = await get_splits_details(selected_splits.split_id)
+        split_id = splits_data._id
+
+        for(let sections of splits_data.sections){
+            let formatted_selection = await format_sections(sections)
+            formatted_selection_array.push(splits_data.book+"+"+formatted_selection) 
+        }
     }
     console.log(split_id)
     let return_data = {
         "splits_id": split_id,
         "formmated_selection": formatted_selection_array
     }
-
+    
     return(return_data)
 }
 

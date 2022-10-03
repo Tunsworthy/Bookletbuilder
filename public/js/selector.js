@@ -32,7 +32,7 @@ function reset_class(element){
     element.setAttribute("class","btn btn-normal btn-floating ripple-surface shadow-none verse")
     element.setAttribute("onclick","select_normal(this)")
     element.children[0].setAttribute("style",'color:black')
-};
+}
 ////Functions to set class End
 
 //This is the function that runs when you select a normal element
@@ -184,8 +184,9 @@ on a range change - update details
 */
 function split_id_details(id){
     console.log("in split_id_details")
-    let chapter = id.match(/C[0-9]*/)[0].replace("C","")
-    let verse = id.match(/V[0-9]*/)[0].replace("V","")
+
+    let chapter = id.match(/C\d{1,2}/)[0].replace("C","")
+    let verse = id.match(/V\d{1,2}/)[0].replace("V","")
 
     let detail = {chapter: chapter, verse: verse,id: id}
     console.log(detail)
@@ -208,7 +209,30 @@ console.log("in create input")
     let end_details = split_id_details(end_id)
 
     console.log(cloned.getElementsByTagName('input'))
-    var elements = cloned.getElementsByTagName('input')
+    let elements = cloned.getElementsByTagName('input')
+
+    for (let element of elements){
+        switch(true){
+            case element.id == "start-chapter":
+                console.log("chapter-start found")
+                await set_input_details(element,start_details.chapter,start_id)
+            break;
+            case element.id  == "start-verse":
+                await set_input_details(element,start_details.verse,start_id)
+                console.log("chapter-verse found")
+            break;
+            
+            case element.id  == "end-chapter":
+                await set_input_details(element,end_details.chapter,end_id)
+                console.log("chapter-end found")
+             break;
+            case element.id  == "end-verse":
+                await set_input_details(element,end_details.verse,end_id)
+                console.log("verse-end found")
+             break;
+        }       
+    }
+    /* Commneted out for refactor
     for (let i = 0; i < elements.length; i++){
 
         switch(true){
@@ -231,6 +255,7 @@ console.log("in create input")
              break;
         }
     }
+    */
 
 
     let formgroup = document.getElementById("form-group")
@@ -255,7 +280,7 @@ function update_input(previous_id,current_id){
 
 async function set_input_details(element,value,id){
     element.setAttribute('value',value)
-    newid = element.id.split('-')[1] +"-" + id
+    let newid = element.id.split('-')[1] +"-" + id
     element.setAttribute('id',newid)
     element.classList.add('active')
     return(element)
@@ -265,16 +290,13 @@ async function set_input_details(element,value,id){
 
 //
 function formsubmit(){
-    //const form = document.getElementById('form');
     const form = document.getElementsByClassName('form-row')[0]
     console.log(form)
     const formData = new FormData(form);
     console.log(formData)
-    //const output = document.getElementById('output');
 
     for (const [key, value] of formData) {
         console.log(key+":" +value)
-        //output.textContent += `${key}: ${value}\n`;
     }
 }
 
@@ -287,6 +309,17 @@ function calculate_ranges(){
     
     let allElements = Array.from(document.getElementsByClassName("verse"))
     let all = []
+    for (let elements of allElements){
+        switch(true){
+            case elements.classList.contains('btn-start'):
+                all.push(elements)
+                break;
+           case elements.classList.contains('btn-end'):
+                all.push(elements)
+                break;
+        }
+    }
+    /* Commented out for refactor
     for (let i = 0; i < allElements.length; i++){
         switch(true){
             case allElements[i].classList.contains('btn-start'):
@@ -297,6 +330,7 @@ function calculate_ranges(){
                 break;
         }
     }
+    */
     console.log(all)  
 
 }

@@ -1,8 +1,8 @@
 'use strict';
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
 BookSchema = mongoose.model('BookSchema')
 
-var exports = module.exports;
+const exports = module.exports;
 module.exports = function(app){
   
   app.get('/book',function(req,res){
@@ -32,7 +32,7 @@ module.exports = function(app){
   app.post('/book',function(req,res){
     console.log('called post');
     console.log(req.body);
-    var new_book = new BookSchema(req.body);
+    let new_book = new BookSchema(req.body);
     new_book.save(function(err,book){
       if(err)
        res.send(err)

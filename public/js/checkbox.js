@@ -1,9 +1,19 @@
 //this page is used to update checkboxes with the correct value if selected or not
 
 function updatecheckbox(){
-   // console.log('in update checkbox')
+   
     let elements = document.querySelectorAll(".form-check-input");
-    //console.log(elements)
+
+
+    for (let element of elements){
+        let setting = element.getAttribute('data-setting')
+
+        if(setting === 'on'){
+            element.setAttribute('checked', '');
+        }
+    }
+    /*
+    Commented out for refactor
     for (let i = 0; i < elements.length; i++) {
         let setting = elements[i].getAttribute('data-setting')
         //console.log(setting)
@@ -13,4 +23,5 @@ function updatecheckbox(){
         }
         
       }
+    */
 }
