@@ -2,7 +2,7 @@
 const mongoose = require('mongoose'),
 SplitsSchema = mongoose.model('SplitsSchema')
 
-const exports = module.exports;
+exports = module.exports;
 module.exports = function(app){
   // Event Routes
 

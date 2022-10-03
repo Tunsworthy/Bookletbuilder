@@ -2,7 +2,7 @@
 const mongoose = require('mongoose'),
   ESVConfig = mongoose.model('ESVConfig')
 
-  const exports = module.exports;
+exports = module.exports;
 module.exports = function(app){
   // Event Routes
   app.get('/esv',function(req,res){

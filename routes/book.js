@@ -2,7 +2,7 @@
 const mongoose = require('mongoose'),
 BookSchema = mongoose.model('BookSchema')
 
-const exports = module.exports;
+exports = module.exports;
 module.exports = function(app){
   
   app.get('/book',function(req,res){

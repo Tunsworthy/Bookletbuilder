@@ -149,7 +149,7 @@ function set_range(element){
     set_class_end(allElements[order[1]]) 
     
 
-    for (var i = order[0]+1; i < order[1]; i++) {
+    for (let i = order[0]+1; i < order[1]; i++) {
         if(allElements[i].classList.contains('btn-start')|| allElements[i].classList.contains('btn-end')){
             console.log('element found in middle of range that is a start or end')
             //need to create a range remove and a delete row

@@ -5,10 +5,10 @@ let alertdata = {
   "type" : "Success"
 }
 
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
 BookSchema = mongoose.model('BookSchema')
 
-var exports = module.exports;
+exports = module.exports;
 module.exports = function(app){
   // Event Routes
   app.get('/selector/:book',function(req,res){

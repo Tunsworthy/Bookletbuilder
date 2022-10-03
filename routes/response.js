@@ -2,7 +2,7 @@
 const mongoose = require('mongoose'),
 Response = mongoose.model('ResponseSchema')
 
-const exports = module.exports;
+exports = module.exports;
 module.exports = function(app){
   
   app.get('/response/all',function(req,res){

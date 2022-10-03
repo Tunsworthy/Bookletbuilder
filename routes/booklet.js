@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
   Booklet = mongoose.model('BookletSchema'),
   SplitsSchema = mongoose.model('SplitsSchema')
 
-  const exports = module.exports;
+  exports = module.exports;
 module.exports = function(app){
   //Route used to create a new booklet
   app.get('/booklet/new',function(req,res){
