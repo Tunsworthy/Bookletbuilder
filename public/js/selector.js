@@ -312,9 +312,7 @@ function calculate_ranges(){
     for (let elements of allElements){
         switch(true){
             case elements.classList.contains('btn-start'):
-                all.push(elements)
-                break;
-           case elements.classList.contains('btn-end'):
+            case elements.classList.contains('btn-end'):    
                 all.push(elements)
                 break;
         }
