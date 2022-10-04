@@ -140,21 +140,21 @@ function range_data_update(previous_id,current_id,from){
   const transaction = db.transaction(['range_os'], 'readwrite');
   const objectStore = transaction.objectStore('range_os');
 
-  const index = null
-  const selection = null
+  let sindex = null
+  let selection = null
 
   switch(from){
     case "start":
-      index = objectStore.index("range_start_id")
+      sindex = objectStore.index("range_start_id")
       selection = "range_start_id"
       break;
     case "end":
-      index = objectStore.index("range_end_id")
+      sindex = objectStore.index("range_end_id")
       selection = "range_end_id"
       break;
   }
 
-  let request = index.get(previous_id)
+  let request = sindex.get(previous_id)
   
   request.onsuccess = () => {
     console.log(request.result);
