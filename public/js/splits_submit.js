@@ -3,8 +3,6 @@
 This files contains the functions to submit the selection data
 
 */
-
-
 async function submit_data(book){
   let url = '/split'
 
@@ -13,6 +11,7 @@ async function submit_data(book){
   let selection = await get_data();
   console.log("selection returned")
   console.log(selection)
+
 
   let body = await build_body(book,selection);
   console.log("body returned")
@@ -59,7 +58,8 @@ async function build_body(book,selection,userid,version){
         userid: "Example",
         version: 1,
         book: book, 
-        sections: selection
+        sections: selection,
+        nickname: document.getElementById('nickname').value
     }
 
     //selection.push(body)

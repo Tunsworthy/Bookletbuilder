@@ -28,7 +28,7 @@ const Schema = mongoose.Schema;
       type: String
     },
     nickname: {
-      type: Number
+      type: String
     },
     book: {
       type: String

@@ -1,4 +1,24 @@
 extends ../layout
 block content
-  .d-inline-flex.flex-grow-1.bg-white.rounded.shadow-5-strong.p-5.me-2.my-2.mx-2
-    span 
+  script(type='text/javascript' src='/js/new_booklet_page.js')
+  .d.flex-grow-1.bg-white.rounded.shadow-5-strong.p-5.me-2.my-2.mx-2
+      h2.text-center Create Booklet
+      div.form-group
+        span Booklet Name
+        .div.form-outline.mb-4
+          input.form-control(type='text' id='bookletname' name='bookletname')
+          label.form-label(for='bookletname') Name
+        .row
+         .col
+          span(align="center") Add Selections to the Booklet
+          .input-group
+            select.custom-select.form-control(id="select")
+              each split in splits 
+                option(value=split._id label=split.nickname+'-'+split.book) #{split.nickname} - #{split.book}
+            .input-group-append
+              a.btn.btn-primary(onclick="addToBasket()") Add
+         .col
+          span Selected
+          ul(id="list")
+        .row
+          button.btn.btn-lg.btn-success.ml-1.me-1.disabled(id='process_btn') Process

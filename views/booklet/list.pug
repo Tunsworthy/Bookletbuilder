@@ -1,38 +1,21 @@
 extends ../layout
 block content
   script(type='text/javascript' src='/js/splits_page.js')
-  .d-inline-flex.flex-grow-1.bg-white.rounded.shadow-5-strong.p-5.me-2.my-2.mx-2
-        table(class="table table-hover table-striped")
-          tr
-           td
-            span Book
-           td
-            span Version
-           td 
-            span Splits
-           td
-            span Actions
-          each split in data
-           tr
-            td
-             span #{split.book}
-            td
-             span #{split.__v}
-            td
-             button.btn.btn-primary(type="button" data-mdb-toggle="collapse" data-mdb-target="#collapse_target_"+split._id aria-expanded="false" aria-controls="collapse_target_"+split._id )
-              i.fa-solid.fa-angle-down
-             div.mt-3.collapse(id="collapse_target_"+split._id)
-               each range in split.sections
-                -let schapter = range.range_start_id.match(/C[0-9]*/)[0].replace("C","")
-                -let sverse = range.range_start_id.match(/V[0-9]*/)[0].replace("V","")
-                -let echapter = range.range_end_id.match(/C[0-9]*/)[0].replace("C","")
-                -let everse = range.range_end_id.match(/V[0-9]*/)[0].replace("V","")
-                  span #{schapter}:#{sverse} - #{echapter}:#{everse}
-                  br
-            td        
-             button.btn.btn-secondary.btn-sm.ml-1.me-1(href='#') Edit
-             |
-             button.btn.btn-danger.btn-sm.ml-1.me-1(onclick='delete_split("'+split._id+'")') Delete
-  .d-inline-flex.bg-white.rounded.shadow-5-strong.p-5.me-2.my-2.mx-2
-       span Cart
-       span Test Test Test Test
+  .d.flex-grow-1.bg-white.rounded.shadow-5-strong.p-5.me-2.my-2.mx-2
+    h3.text-center Saved Booklets
+    table(class="table table-hover table-striped")
+      tr
+        td
+          span Booklet Name
+        td(style "align=right")
+          span Actions
+      each booklet in booklet_data
+        tr
+          td
+            span #{booklet.bookletname}
+          td(style 'align=right') 
+            button.btn.btn-primary.btn-sm.ml-1.me-1(href='#') View
+            |      
+            button.btn.btn-secondary.btn-sm.ml-1.me-1(href='#') Edit
+            |
+            button.btn.btn-danger.btn-sm.ml-1.me-1(onclick='delete_split("'+booklet._id+'")') Delete

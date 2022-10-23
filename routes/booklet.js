@@ -10,8 +10,26 @@ const mongoose = require('mongoose'),
 module.exports = function(app){
   //Route used to create a new booklet
   app.get('/booklet/new',function(req,res){
-        res.render('/booklet/new',{title: process.env.PROGRAM_NAME});
+    SplitsSchema.find({userid: "Example"},function(err,data){
+      if (err)
+          res.send(err)
+      console.log(data)
+      res.render('booklet/new',{title: process.env.PROGRAM_NAME, splits: data});
+    })
   });
+
+  //Route for Booklet options
+  app.get('/booklet',function(req,res){
+    Booklet.find({userid: "Example"},function(err,data){
+      if (err)
+          res.send(err)
+      res.render('booklet/list',{title: process.env.PROGRAM_NAME ,booklet_data: data});
+    })
+
+
+        
+  });
+
 
   app.post('/booklet/new',function(req,res){
     console.log('called post');
