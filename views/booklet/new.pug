@@ -9,16 +9,36 @@ block content
           input.form-control(type='text' id='bookletname' name='bookletname')
           label.form-label(for='bookletname') Name
         .row
-         .col
-          span(align="center") Add Selections to the Booklet
-          .input-group
-            select.custom-select.form-control(id="select")
-              each split in splits 
-                option(value=split._id label=split.nickname+'-'+split.book) #{split.nickname} - #{split.book}
-            .input-group-append
-              a.btn.btn-primary(onclick="addToBasket()") Add
-         .col
-          span Selected
-          ul(id="list")
+         span(align="center") Add Selections to the Booklet
+         .col.droptarget
+          table.table.table-sm(id="table_source")
+           thead.table-light
+            tr
+             td 
+               i.fa-solid.fa-bars
+             td
+              span Nickname
+             td
+              span Book
+            tbody
+             each split in splits
+              tr(draggable="true")
+               td 
+                i.fa-solid.fa-bars.pe-2
+               td
+                span #{split.nickname}
+               td
+                span #{split.book}
+         .col.droptarget
+          table.table.table-sm(id="table_destination")
+             thead.table-light
+               tr
+                td 
+                 i.fa-solid.fa-bars
+                td
+                 span Nickname
+                td
+                 span Book
+             tbody
         .row
           button.btn.btn-lg.btn-success.ml-1.me-1.disabled(id='process_btn') Process

@@ -44,3 +44,33 @@ function addToBasket() {
     element.options[element.selectedIndex].remove()
     process_button()
 }
+
+
+document.addEventListener("dragstart" ,function(event){
+    console.log('on drag start')
+    console.log(event)
+    event.target.setAttribute('id','Selected')
+    event.dataTransfer.setData("text", event.target.id);
+    console.log(event.dataTransfer.getData("text"))
+})
+
+
+  document.addEventListener("dragover", function(event) {
+    event.preventDefault();
+  });
+
+  document.addEventListener("drop", function(event) {
+    event.preventDefault();
+    console.log("Dropped")
+    console.log(event.dataTransfer.getData("text"))
+    const source_ele = document.getElementById(event.dataTransfer.getData("text"))
+    console.log(source_ele)
+
+    console.log(event)
+    const target_ele = event.target.lastElementChild
+    console.log(target_ele)
+    //document.getElementById(target_ele)
+    target_ele.appendChild(source_ele)
+
+    
+    });
