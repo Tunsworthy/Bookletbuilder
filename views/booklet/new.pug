@@ -10,8 +10,8 @@ block content
           label.form-label(for='bookletname') Name
         .row
          span(align="center") Add Selections to the Booklet
-         .col.droptarget
-          table.table.table-sm(id="table_source")
+         .col.drop_target
+          table.table.table-sm
            thead.table-light
             tr
              td 
@@ -29,8 +29,8 @@ block content
                 span #{split.nickname}
                td
                 span #{split.book}
-         .col.droptarget
-          table.table.table-sm(id="table_destination")
+         .col.drop_target
+          table.table.table-sm
              thead.table-light
                tr
                 td 
@@ -39,6 +39,6 @@ block content
                  span Nickname
                 td
                  span Book
-             tbody
+             tbody(id="tbody_destination")
         .row
           button.btn.btn-lg.btn-success.ml-1.me-1.disabled(id='process_btn') Process
