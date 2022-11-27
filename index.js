@@ -1,4 +1,5 @@
 //Required modules
+const { Console } = require('console');
 const express = require('express')
     , mongoose = require('mongoose')
     , models = require('./models')
@@ -11,7 +12,8 @@ const express = require('express')
     , fs = require('fs')
 
 //Connect to Mongo
-async function dbconnection(){
+if(process.env.MONGODB_URI){
+   async function dbconnection(){
 	mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true,useUnifiedTopology: true }).then( 
 			() => {
 				console.log('Database connection established')
@@ -21,7 +23,9 @@ async function dbconnection(){
 			dbconnection()
 		});
 }
-dbconnection().catch(error => console.log(error))
+dbconnection().catch(error => console.log(error)) 
+}
+
 
 const app = express();
 
